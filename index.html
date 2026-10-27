@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>維度之外 BEYOND DIMENSION — 當代視覺傳達與實驗設計工作室</title>
+    
+    <!-- Modern Editorial & Experimental Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Sora:wght@300;400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#F7F7F5',
+                            darkBg: '#0D0D0E',
+                            text: '#151515',
+                            muted: '#666666',
+                            surface: '#EBEBE8',
+                            blue: '#2457D6',
+                            blueLight: '#3D6DEA',
+                            blueDark: '#173BA3'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'Noto Sans TC', 'sans-serif'],
+                        display: ['Sora', 'Space Grotesk', 'Noto Sans TC', 'sans-serif'],
+                        zh: ['Noto Sans TC', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Modern Swiss Typography & Fine Lines */
+        body {
+            background-color: #F7F7F5;
+            color: #151515;
+            font-family: 'Space Grotesk', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
+            letter-spacing: -0.02em;
+        }
+
+        ::selection {
+            background-color: #2457D6;
+            color: #FFFFFF;
+        }
+
+        /* Architectural Grid & Structural Border Overlays */
+        .grid-line-overlay {
+            background-size: 60px 60px;
+            background-image: 
+                linear-gradient(to right, rgba(21, 21, 21, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(21, 21, 21, 0.04) 1px, transparent 1px);
+        }
+
+        .border-fine {
+            border-color: rgba(21, 21, 21, 0.15);
+        }
+
+        .border-blue-accent {
+            border-color: #2457D6;
+        }
+
+        /* Deconstructed Letter Mechanics */
+        .deconstruct-char {
+            display: inline-block;
+            will-change: transform, color, opacity;
+            transition: color 0.2s ease;
+        }
+
+        /* Image Masking & Zoom Containers */
+        .img-reveal-container {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-reveal-container img {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform;
+        }
+
+        .work-card:hover .img-reveal-container img {
+            transform: scale(1.06);
+        }
+
+        /* Backdrop Blurs & Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F7F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2457D6;
+        }
+
+        .modal-backdrop {
+            backdrop-filter: blur(12px);
+        }
+
+        /* Motion Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            #intro-loader {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-text antialiased selection:bg-brand-blue selection:text-white">
+
+    <!-- INTRO ANIMATION OVERLAY -->
+    <div id="intro-loader" class="fixed inset-0 z-50 bg-brand-darkBg text-white flex flex-col justify-between p-8 md:p-16 overflow-hidden pointer-events-auto">
+        <!-- Top Coordinate Row -->
+        <div class="flex justify-between items-center font-mono text-xs text-neutral-500 border-b border-neutral-800 pb-4">
+            <span class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-brand-blue rounded-full animate-ping"></span>
+                SYSTEM INITIALIZING // BD-2026-HQ
+            </span>
+            <span id="intro-counter" class="text-brand-blue font-bold">00%</span>
+        </div>
+
+        <!-- Center Dynamic Motion Text Block -->
+        <div class="my-auto max-w-5xl">
+            <div id="intro-tag" class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-4 opacity-0">
+                // ARCHITECTURAL & EXPERIMENTAL VISUAL PRACTICE
+            </div>
+            <div id="intro-title" class="text-4xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight leading-none text-white overflow-hidden">
+                <span class="inline-block transform translate-y-full">BEYOND DIMENSION</span>
+            </div>
+            <div id="intro-sub" class="text-lg sm:text-2xl font-zh font-light text-neutral-400 mt-6 max-w-xl opacity-0">
+                維度之外 — 突破既有形式與視覺框架。
+            </div>
+        </div>
+
+        <!-- Geometric Shutter Accent Boxes for Intro Exit -->
+        <div id="intro-shutter-1" class="absolute inset-0 bg-brand-blue -z-10 transform translate-y-full"></div>
+        <div id="intro-shutter-2" class="absolute inset-0 bg-brand-bg -z-20 transform translate-y-full"></div>
+
+        <!-- Bottom Status -->
+        <div class="flex justify-between items-end font-mono text-xs text-neutral-500 border-t border-neutral-800 pt-4">
+            <span>TAIPEI // GLOBAL DESIGN STUDIO</span>
+            <span>STRUCTURE & ORDER</span>
+        </div>
+    </div>
+
+    <!-- Background Grid Layer -->
+    <div class="fixed inset-0 pointer-events-none z-0 grid-line-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-40 bg-brand-bg/90 backdrop-blur-md border-b border-fine transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-3.5 h-3.5 bg-brand-blue transition-transform duration-300 group-hover:scale-125"></div>
+                <div class="flex flex-col">
+                    <span class="font-display font-bold tracking-tight text-lg leading-none">維度之外</span>
+                    <span class="text-[10px] tracking-widest text-brand-muted font-mono uppercase mt-1">BEYOND DIMENSION</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center space-x-5 lg:space-x-6 text-xs font-mono tracking-wider">
+                <a href="#about" class="hover:text-brand-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-brand-blue hover:after:w-full after:transition-all">01 // 理念 PHILOSOPHY</a>
+                <a href="#services" class="hover:text-brand-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-brand-blue hover:after:w-full after:transition-all">02 // 服務 SERVICES</a>
+                <a href="#works" class="hover:text-brand-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-brand-blue hover:after:w-full after:transition-all">03 // 作品 PORTFOLIO</a>
+                <a href="#cases" class="hover:text-brand-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-brand-blue hover:after:w-full after:transition-all">04 // 案例 CASES</a>
+                <a href="#contact" class="hover:text-brand-blue transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-brand-blue hover:after:w-full after:transition-all">05 // 聯絡 CONTACT</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:block">
+                <a href="#contact" class="px-4 py-2 text-xs font-mono border-2 border-brand-text hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-all duration-300 tracking-wider font-bold">
+                    INQUIRE // 諮詢專案
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="menu-toggle" aria-label="Toggle Navigation Menu" class="md:hidden p-2 focus:outline-none">
+                <div class="w-6 h-0.5 bg-brand-text mb-1.5 transition-all id-line-1"></div>
+                <div class="w-6 h-0.5 bg-brand-text transition-all id-line-2"></div>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-bg border-b border-fine px-6 py-8 space-y-6">
+            <a href="#about" class="mobile-link block text-lg font-bold">01 // 理念 ABOUT</a>
+            <a href="#services" class="mobile-link block text-lg font-bold">02 // 服務項目 SERVICES</a>
+            <a href="#works" class="mobile-link block text-lg font-bold">03 // 精選作品 WORKS</a>
+            <a href="#cases" class="mobile-link block text-lg font-bold">04 // 案例解析 CASE STUDIES</a>
+            <a href="#contact" class="mobile-link block text-lg font-bold text-brand-blue">05 // 聯絡工作室 CONTACT</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="relative z-10 pt-20">
+
+        <!-- 01 // HERO SECTION WITH EXPERIMENTAL DECONSTRUCTIVE TYPOGRAPHY -->
+        <section id="hero" class="min-h-[calc(100vh-5rem)] flex flex-col justify-between max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-16 border-b border-fine relative overflow-hidden">
+            
+            <!-- Floating Dimensional Geometry (Parallax Layers) -->
+            <div id="hero-geo-1" class="absolute top-12 right-6 lg:right-16 w-64 h-64 lg:w-96 lg:h-96 border-2 border-brand-blue/30 pointer-events-none transform rotate-12 flex items-center justify-center">
+                <div class="w-3/4 h-3/4 bg-brand-blue/10 border border-brand-blue/60 transform -rotate-45"></div>
+            </div>
+            <div id="hero-geo-2" class="absolute bottom-20 right-1/3 w-40 h-40 bg-brand-blue/20 -z-10 pointer-events-none transform rotate-45 border border-brand-blue"></div>
+
+            <!-- Top Metadata Bar -->
+            <div class="flex justify-between items-start border-b border-fine pb-6">
+                <div class="flex items-center space-x-3">
+                    <span class="w-2.5 h-2.5 bg-brand-blue rounded-full animate-pulse"></span>
+                    <span class="text-xs font-mono tracking-widest uppercase text-brand-text font-bold">VISUAL DESIGN STUDIO</span>
+                </div>
+                <div class="text-xs font-mono tracking-widest text-brand-muted hidden sm:block">
+                    TAIPEI / GLOBAL // © 2026 BD-STUDIO
+                </div>
+            </div>
+
+            <!-- Central Editorial Hero Block -->
+            <div class="my-auto py-8">
+                
+                <!-- Interactive Cursor-Sensitive Typography Header -->
+                <div id="deconstruct-target" class="mb-5 cursor-crosshair select-none relative z-20">
+                    <p class="text-xs font-mono text-brand-blue uppercase tracking-widest mb-2 font-bold">[ HOVER TO DECONSTRUCT ]</p>
+                    <h2 class="text-3xl sm:text-5xl md:text-6xl lg:text-[5.2rem] font-display font-extrabold tracking-tighter leading-none text-brand-text">
+                        BEYOND DIMENSION
+                    </h2>
+                </div>
+
+                <!-- Main Chinese Impact Title -->
+                <h1 id="hero-title" class="text-2xl sm:text-4xl md:text-5xl font-zh font-black tracking-tight leading-[1.2] mb-6 text-brand-text">
+                    不被既定形式定義<span class="text-brand-blue">。</span>
+                </h1>
+
+                <!-- Architectural Accent Line & Subtitle -->
+                <div class="flex flex-col md:flex-row gap-5 md:gap-8 items-start md:items-center mb-8">
+                    <div class="w-12 h-0.5 bg-brand-blue"></div>
+                    <p id="hero-subtitle" class="text-sm sm:text-base lg:text-lg text-brand-muted font-zh font-light max-w-xl leading-relaxed">
+                        以視覺為起點，探索形式、結構與想像的更多可能。以當代實驗精神與理性秩序構築感染力。
+                    </p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div id="hero-cta" class="flex flex-wrap items-center gap-4 pt-1">
+                    <a href="#works" class="px-7 py-3.5 bg-brand-text text-white font-mono text-xs tracking-widest uppercase hover:bg-brand-blue transition-colors duration-300 flex items-center space-x-3 font-bold group">
+                        <span>探索作品 EXPLORE WORKS</span>
+                        <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                    </a>
+                    <a href="#about" class="px-7 py-3.5 border-2 border-brand-text text-brand-text font-mono text-xs tracking-widest uppercase hover:border-brand-blue hover:text-brand-blue transition-colors duration-300 font-bold">
+                        認識我們 ABOUT US
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Specs Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 pt-6 border-t border-fine text-xs font-mono text-brand-muted">
+                <div>
+                    <span class="block text-brand-text font-bold">ESTABLISHED</span>
+                    <span>2021 // TAIPEI</span>
+                </div>
+                <div>
+                    <span class="block text-brand-text font-bold">DISCIPLINE</span>
+                    <span>BRANDING / DIGITAL</span>
+                </div>
+                <div>
+                    <span class="block text-brand-text font-bold">METHODOLOGY</span>
+                    <span>STRUCTURAL & EXPERIMENTAL</span>
+                </div>
+                <div>
+                    <span class="block text-brand-text font-bold">INDEX NO.</span>
+                    <span>BD-2026-HQ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 // DESIGN PHILOSOPHY SECTION -->
+        <section id="about" class="max-w-7xl mx-auto px-6 lg:px-12 py-24 border-b border-fine">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Left Index Column -->
+                <div class="lg:col-span-4 sticky top-28">
+                    <div class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-3 font-bold">01 // PHILOSOPHY</div>
+                    <h2 class="text-3xl sm:text-4xl font-zh font-bold tracking-tight mb-4 leading-tight">在既定框架之外，<br>尋找新的表達方式。</h2>
+                    <div class="w-12 h-1 bg-brand-blue mb-6"></div>
+                    <p class="text-xs font-mono text-brand-muted leading-relaxed uppercase">
+                        BEYOND DIMENSION IS A TAIPEI-BASED DESIGN PRACTICE FOCUSING ON BRAND IDENTITY, DIGITAL MEDIA AND EDITORIAL SYSTEMS.
+                    </p>
+                </div>
+
+                <!-- Right Editorial Body Column -->
+                <div class="lg:col-span-8 space-y-12">
+                    <div class="about-p text-xl sm:text-3xl font-zh font-light leading-relaxed border-l-4 border-brand-blue pl-6 lg:pl-10">
+                        「我們相信，設計不只是形式的安排，更是對問題、秩序與可能性的重新思考。」
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
+                        <div class="about-card p-8 bg-brand-surface border-2 border-fine hover:border-brand-blue transition-colors">
+                            <span class="text-4xl font-mono text-brand-blue font-extrabold block mb-4">01.</span>
+                            <h3 class="text-xl font-zh font-bold mb-3">理性秩序與清晰邏輯</h3>
+                            <p class="text-sm text-brand-muted font-zh leading-relaxed">
+                                從概念發想到視覺實踐，我們摒棄無意義的視覺裝飾，以嚴謹的網格與架構梳理複雜訊息。
+                            </p>
+                        </div>
+                        <div class="about-card p-8 bg-brand-surface border-2 border-fine hover:border-brand-blue transition-colors">
+                            <span class="text-4xl font-mono text-brand-blue font-extrabold block mb-4">02.</span>
+                            <h3 class="text-xl font-zh font-bold mb-3">探索視覺幾何維度</h3>
+                            <p class="text-sm text-brand-muted font-zh leading-relaxed">
+                                透過空間感、平面幾何與層次交疊，建立具備高度識別度與當代藝術價值的視覺語言。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Geometric Visual Accent Component -->
+                    <div class="p-8 border-2 border-brand-text bg-brand-text text-white relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-6">
+                        <div class="relative z-10">
+                            <span class="text-xs font-mono text-brand-blue uppercase tracking-wider block mb-1 font-bold">// CORE METHODOLOGY</span>
+                            <h4 class="text-2xl font-zh font-bold">精準、克制、具有視覺指標性</h4>
+                        </div>
+                        <div class="font-mono text-xs text-neutral-400 max-w-xs relative z-10 uppercase">
+                            EVERY DIMENSION HAS ITS OWN RULES. WE BREAK AND REBUILD THEM WITH INTENSITY.
+                        </div>
+                        <div class="absolute -right-10 -bottom-10 w-48 h-48 border-2 border-brand-blue/40 rounded-full pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 // SERVICES SECTION -->
+        <section id="services" class="max-w-7xl mx-auto px-6 lg:px-12 py-24 border-b border-fine">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-fine pb-8">
+                <div>
+                    <div class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-3 font-bold">02 // CAPABILITIES</div>
+                    <h2 class="text-3xl sm:text-5xl font-zh font-bold">從概念，到可被感知的形式。</h2>
+                </div>
+                <p class="text-xs font-mono text-brand-muted mt-4 md:mt-0 max-w-xs uppercase">
+                    SYSTEMATIC VISUAL SOLUTIONS ACROSS PHYSICAL & DIGITAL MEDIA.
+                </p>
+            </div>
+
+            <!-- Structured Asymmetric Grid Services -->
+            <div class="space-y-4">
+                <!-- Service 01 -->
+                <div class="service-row group border-2 border-fine p-6 sm:p-8 hover:border-brand-blue transition-all duration-300 bg-brand-bg hover:bg-white relative overflow-hidden opacity-100">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-brand-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-1 font-mono text-xl font-bold text-brand-blue">01</div>
+                        <div class="md:col-span-4">
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">品牌識別設計</h3>
+                            <span class="text-xs font-mono text-brand-muted block mt-1">BRAND IDENTITY DESIGN</span>
+                        </div>
+                        <div class="md:col-span-5 text-sm font-zh text-brand-muted leading-relaxed">
+                            從品牌定位、標誌到整體視覺系統，建立具有辨識度且一致的品牌形象。
+                        </div>
+                        <div class="md:col-span-2 text-right hidden md:block">
+                            <span class="inline-block p-3 rounded-full border-2 border-fine group-hover:border-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all transform group-hover:rotate-45 font-mono font-bold">
+                                ↗
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 02 -->
+                <div class="service-row group border-2 border-fine p-6 sm:p-8 hover:border-brand-blue transition-all duration-300 bg-brand-bg hover:bg-white relative overflow-hidden opacity-100">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-brand-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-1 font-mono text-xl font-bold text-brand-blue">02</div>
+                        <div class="md:col-span-4">
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">平面與編輯設計</h3>
+                            <span class="text-xs font-mono text-brand-muted block mt-1">GRAPHIC & EDITORIAL DESIGN</span>
+                        </div>
+                        <div class="md:col-span-5 text-sm font-zh text-brand-muted leading-relaxed">
+                            透過字體、版面、圖像與資訊編排，將內容轉化為清晰且有個性的視覺表達。
+                        </div>
+                        <div class="md:col-span-2 text-right hidden md:block">
+                            <span class="inline-block p-3 rounded-full border-2 border-fine group-hover:border-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all transform group-hover:rotate-45 font-mono font-bold">
+                                ↗
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 03 -->
+                <div class="service-row group border-2 border-fine p-6 sm:p-8 hover:border-brand-blue transition-all duration-300 bg-brand-bg hover:bg-white relative overflow-hidden opacity-100">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-brand-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-1 font-mono text-xl font-bold text-brand-blue">03</div>
+                        <div class="md:col-span-4">
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">網頁與數位設計</h3>
+                            <span class="text-xs font-mono text-brand-muted block mt-1">WEB & DIGITAL DESIGN</span>
+                        </div>
+                        <div class="md:col-span-5 text-sm font-zh text-brand-muted leading-relaxed">
+                            結合介面設計、互動體驗與動態效果，打造兼具美感與易用性的數位作品。
+                        </div>
+                        <div class="md:col-span-2 text-right hidden md:block">
+                            <span class="inline-block p-3 rounded-full border-2 border-fine group-hover:border-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all transform group-hover:rotate-45 font-mono font-bold">
+                                ↗
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service 04 -->
+                <div class="service-row group border-2 border-fine p-6 sm:p-8 hover:border-brand-blue transition-all duration-300 bg-brand-bg hover:bg-white relative overflow-hidden opacity-100">
+                    <div class="absolute left-0 top-0 w-1 h-full bg-brand-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                        <div class="md:col-span-1 font-mono text-xl font-bold text-brand-blue">04</div>
+                        <div class="md:col-span-4">
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">動態視覺設計</h3>
+                            <span class="text-xs font-mono text-brand-muted block mt-1">MOTION VISUAL DESIGN</span>
+                        </div>
+                        <div class="md:col-span-5 text-sm font-zh text-brand-muted leading-relaxed">
+                            運用動態圖像、文字動畫與節奏變化，讓視覺內容更有層次與表現力。
+                        </div>
+                        <div class="md:col-span-2 text-right hidden md:block">
+                            <span class="inline-block p-3 rounded-full border-2 border-fine group-hover:border-brand-blue group-hover:bg-brand-blue group-hover:text-white transition-all transform group-hover:rotate-45 font-mono font-bold">
+                                ↗
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 // SELECTED WORKS SECTION -->
+        <section id="works" class="max-w-7xl mx-auto px-6 lg:px-12 py-24 border-b border-fine">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-fine pb-8">
+                <div>
+                    <div class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-3 font-bold">03 // PORTFOLIO</div>
+                    <h2 class="text-3xl sm:text-5xl font-zh font-bold">以不同形式，回應不同問題。</h2>
+                </div>
+                <div class="text-xs font-mono text-brand-muted mt-4 md:mt-0 flex items-center space-x-2">
+                    <span>CLICK WORK TO EXPAND DETAILS</span>
+                    <span class="w-2.5 h-2.5 bg-brand-blue rounded-full"></span>
+                </div>
+            </div>
+
+            <!-- Asymmetric Grid of 6 Selected Works -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+
+                <!-- Work Item 01 (Large) -->
+                <div class="work-card md:col-span-8 group cursor-pointer" onclick="openWorkModal(0)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[16/10] mb-4">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" alt="形構 FORM & STRUCTURE" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            01 // BRANDING
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">形構 FORM & STRUCTURE</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">建築事務所品牌識別系統 (2025)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">01/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2 line-clamp-2">以極簡幾何構成與材料質感為核心，打造理性且富含空間哲學的品牌視覺語言。</p>
+                </div>
+
+                <!-- Work Item 02 (Medium) -->
+                <div class="work-card md:col-span-4 group cursor-pointer" onclick="openWorkModal(1)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=800&q=80" alt="未定義的邊界 UNDEFINED BOUNDARY" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            02 // POSTER
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-xl font-zh font-bold group-hover:text-brand-blue transition-colors">未定義的邊界</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">當代藝術展海報視覺 (2025)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">02/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2 line-clamp-2">運用不對稱排版與層次交疊，探討當代藝術展覽空間中的界線流動。</p>
+                </div>
+
+                <!-- Work Item 03 (Medium) -->
+                <div class="work-card md:col-span-4 group cursor-pointer" onclick="openWorkModal(2)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=800&q=80" alt="視覺座標 VISUAL COORDINATES" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            03 // PACKAGING
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-xl font-zh font-bold group-hover:text-brand-blue transition-colors">視覺座標</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">獨立咖啡品牌包裝設計 (2024)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">03/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2 line-clamp-2">以經緯座標與網格系統標註產地資訊，將理性的數據轉化為溫潤的包裝體驗。</p>
+                </div>
+
+                <!-- Work Item 04 (Medium) -->
+                <div class="work-card md:col-span-4 group cursor-pointer" onclick="openWorkModal(3)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80" alt="另一種秩序 ANOTHER ORDER" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            04 // EDITORIAL
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-xl font-zh font-bold group-hover:text-brand-blue transition-colors">另一種秩序</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">設計哲學專刊排版設計 (2024)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">04/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2 line-clamp-2">瑞士風格幾何排版，精準調整字距與行距，呈現高質感閱讀體驗。</p>
+                </div>
+
+                <!-- Work Item 05 (Medium) -->
+                <div class="work-card md:col-span-4 group cursor-pointer" onclick="openWorkModal(4)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[4/5] mb-4">
+                        <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="空間切片 SPATIAL SLICES" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            05 // DIGITAL UI
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-xl font-zh font-bold group-hover:text-brand-blue transition-colors">空間切片</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">藝廊線上展覽平台 (2026)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">05/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2 line-clamp-2">打破傳統合格式網頁，以空間幾何切片方式呈現當代藝術作品。</p>
+                </div>
+
+                <!-- Work Item 06 (Large Horizontal) -->
+                <div class="work-card md:col-span-12 group cursor-pointer" onclick="openWorkModal(5)">
+                    <div class="img-reveal-container bg-brand-surface border-2 border-fine group-hover:border-brand-blue transition-colors relative aspect-[21/9] mb-4">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=80" alt="結構之外 BEYOND STRUCTURE" class="w-full h-full object-cover">
+                        <div class="absolute top-4 left-4 bg-brand-text text-white font-mono text-[10px] font-bold px-3 py-1 tracking-wider uppercase">
+                            06 // MOTION DESIGN
+                        </div>
+                        <div class="absolute bottom-4 right-4 bg-brand-blue text-white w-12 h-12 flex items-center justify-center font-mono text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                            ↗
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-baseline border-b border-fine pb-3">
+                        <div>
+                            <h3 class="text-2xl font-zh font-bold group-hover:text-brand-blue transition-colors">結構之外 BEYOND STRUCTURE</h3>
+                            <p class="text-xs font-mono text-brand-muted mt-1">數位藝術節主視覺與動態識別 (2026)</p>
+                        </div>
+                        <span class="font-mono text-xs text-brand-muted font-bold">06/06</span>
+                    </div>
+                    <p class="text-sm font-zh text-brand-muted mt-2">將維度轉換過程轉化為動態圖形，結合聲光轉場，建立沈浸式的藝術節品牌識別。</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 05 // CASE STUDIES (WITH INTERACTIVE GSAP IMAGE SLIDER) -->
+        <section id="cases" class="max-w-7xl mx-auto px-6 lg:px-12 py-24 border-b border-fine">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-fine pb-8">
+                <div>
+                    <div class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-3 font-bold">04 // DEEP DIVE</div>
+                    <h2 class="text-3xl sm:text-5xl font-zh font-bold">代表案例深度解析。</h2>
+                </div>
+                <p class="text-xs font-mono text-brand-muted mt-4 md:mt-0 max-w-xs uppercase">
+                    IN-DEPTH DESIGN PROCESS FROM BRIEF TO EXECUTION.
+                </p>
+            </div>
+
+            <!-- Case Study 01: Architectural Branding -->
+            <div class="mb-24">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-12">
+                    <div class="lg:col-span-5">
+                        <span class="inline-block px-3 py-1 bg-brand-blue text-white font-mono text-[10px] font-bold mb-4">CASE STUDY 01</span>
+                        <h3 class="text-3xl font-zh font-bold mb-4">「形構」建築品牌重塑</h3>
+                        <p class="text-sm font-zh text-brand-muted leading-relaxed mb-6">
+                            客戶為國內知名建築事務所，希望能翻轉傳統嚴肅的工程形象，建立兼居當代藝術感與結構精準度的全新品牌識別。
+                        </p>
+                        
+                        <div class="space-y-4 border-t border-fine pt-6">
+                            <div>
+                                <span class="text-xs font-mono text-brand-blue block font-bold">01 / DESIGN CHALLENGE</span>
+                                <p class="text-xs font-zh text-brand-muted mt-1">如何在極簡建築形式中融入品牌溫度，並建立跨媒體一致的識別系統。</p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono text-brand-blue block font-bold">02 / CORE CONCEPT</span>
+                                <p class="text-xs font-zh text-brand-muted mt-1">「以線條切割空間」— 將三維建築結構簡化為二維平面幾何標誌。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive GSAP Slider Component for Case Study 01 -->
+                    <div class="lg:col-span-7">
+                        <div class="slider-container border-2 border-fine bg-brand-surface p-4 relative">
+                            <!-- Image Display Window -->
+                            <div class="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                                <img id="case1-img-0" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80" class="case1-slide absolute inset-0 w-full h-full object-cover transition-all" alt="形構 01">
+                                <img id="case1-img-1" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80" class="case1-slide absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" alt="形構 02">
+                                <img id="case1-img-2" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" class="case1-slide absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" alt="形構 03">
+                            </div>
+
+                            <!-- Slider Controls Bar -->
+                            <div class="flex justify-between items-center pt-4 font-mono text-xs">
+                                <div class="flex items-center space-x-2">
+                                    <span id="case1-slide-num" class="text-brand-blue font-bold">01</span>
+                                    <span class="text-brand-muted">/ 03</span>
+                                    <span id="case1-slide-cap" class="text-brand-muted ml-4 truncate hidden sm:inline">— 品牌標誌幾何規範</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="prevCaseSlide(1)" aria-label="Previous Slide" class="p-3 border-2 border-fine hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-colors font-bold">
+                                        ←
+                                    </button>
+                                    <button onclick="nextCaseSlide(1)" aria-label="Next Slide" class="p-3 border-2 border-fine hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-colors font-bold">
+                                        →
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 02: Digital Platform -->
+            <div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    <!-- Interactive GSAP Slider Component for Case Study 02 -->
+                    <div class="lg:col-span-7 order-2 lg:order-1">
+                        <div class="slider-container border-2 border-fine bg-brand-surface p-4 relative">
+                            <!-- Image Display Window -->
+                            <div class="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                                <img id="case2-img-0" src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80" class="case2-slide absolute inset-0 w-full h-full object-cover transition-all" alt="空間切片 01">
+                                <img id="case2-img-1" src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80" class="case2-slide absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" alt="空間切片 02">
+                                <img id="case2-img-2" src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=80" class="case2-slide absolute inset-0 w-full h-full object-cover opacity-0 pointer-events-none" alt="空間切片 03">
+                            </div>
+
+                            <!-- Slider Controls Bar -->
+                            <div class="flex justify-between items-center pt-4 font-mono text-xs">
+                                <div class="flex items-center space-x-2">
+                                    <span id="case2-slide-num" class="text-brand-blue font-bold">01</span>
+                                    <span class="text-brand-muted">/ 03</span>
+                                    <span id="case2-slide-cap" class="text-brand-muted ml-4 truncate hidden sm:inline">— 線上展覽首頁三維佈局</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="prevCaseSlide(2)" aria-label="Previous Slide" class="p-3 border-2 border-fine hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-colors font-bold">
+                                        ←
+                                    </button>
+                                    <button onclick="nextCaseSlide(2)" aria-label="Next Slide" class="p-3 border-2 border-fine hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-colors font-bold">
+                                        →
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 order-1 lg:order-2">
+                        <span class="inline-block px-3 py-1 bg-brand-blue text-white font-mono text-[10px] font-bold mb-4">CASE STUDY 02</span>
+                        <h3 class="text-3xl font-zh font-bold mb-4">「空間切片」線上展覽平台</h3>
+                        <p class="text-sm font-zh text-brand-muted leading-relaxed mb-6">
+                            為台北當代藝廊打造數位互動體驗，將實體展覽空間轉化為動態流暢的線上瀏覽系統。
+                        </p>
+                        
+                        <div class="space-y-4 border-t border-fine pt-6">
+                            <div>
+                                <span class="text-xs font-mono text-brand-blue block font-bold">01 / DIGITAL EXPERIENCE</span>
+                                <p class="text-xs font-zh text-brand-muted mt-1">打破滾動條限制，以多維度視角切換導覽畫廊藝術作品。</p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono text-brand-blue block font-bold">02 / OUTCOME</span>
+                                <p class="text-xs font-zh text-brand-muted mt-1">上線首月即獲得超過 120,000 次獨立瀏覽，並獲選國際視覺設計獎項。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 // CONTACT SECTION -->
+        <section id="contact" class="max-w-7xl mx-auto px-6 lg:px-12 py-28 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7">
+                    <div class="text-xs font-mono text-brand-blue tracking-widest uppercase mb-4 font-bold">05 // START A PROJECT</div>
+                    <h2 class="text-4xl sm:text-6xl font-zh font-bold tracking-tight mb-6">
+                        讓下一個想法，<br>開始成形<span class="text-brand-blue">。</span>
+                    </h2>
+                    <p class="text-lg font-zh text-brand-muted max-w-lg mb-8 leading-relaxed">
+                        如果你正在尋找不同的視覺可能，無論是全新的品牌建立、數位設計或是專案合作，讓我們從一次對話開始。
+                    </p>
+
+                    <!-- Direct Contact Details -->
+                    <div class="space-y-4 font-mono text-sm border-t border-fine pt-8">
+                        <div class="flex items-center space-x-4">
+                            <span class="text-brand-blue font-bold">EMAIL //</span>
+                            <a href="mailto:hello@beyonddimension.design" class="hover:underline font-bold">hello@beyonddimension.design</a>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-brand-blue font-bold">LOCATION //</span>
+                            <span>TAIPEI, TAIWAN (UTC+8)</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-brand-blue font-bold">INSTAGRAM //</span>
+                            <a href="#" class="hover:underline font-bold">@beyond.dimension.studio</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Contact Form -->
+                <div class="lg:col-span-5 bg-brand-surface p-8 border-2 border-fine relative">
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                        <div>
+                            <label class="block font-mono text-xs text-brand-muted uppercase mb-2 font-bold">YOUR NAME // 姓名</label>
+                            <input type="text" required class="w-full bg-brand-bg border-2 border-fine p-3 text-sm focus:outline-none focus:border-brand-blue transition-colors font-zh" placeholder="e.g. 林先生 / Ms. Chen">
+                        </div>
+
+                        <div>
+                            <label class="block font-mono text-xs text-brand-muted uppercase mb-2 font-bold">EMAIL ADDRESS // 電子郵件</label>
+                            <input type="email" required class="w-full bg-brand-bg border-2 border-fine p-3 text-sm focus:outline-none focus:border-brand-blue transition-colors font-mono" placeholder="name@company.com">
+                        </div>
+
+                        <div>
+                            <label class="block font-mono text-xs text-brand-muted uppercase mb-2 font-bold">SERVICE REQUIRED // 需求項目</label>
+                            <select class="w-full bg-brand-bg border-2 border-fine p-3 text-sm focus:outline-none focus:border-brand-blue transition-colors font-zh">
+                                <option>品牌識別 BRAND IDENTITY</option>
+                                <option>平面設計 GRAPHIC DESIGN</option>
+                                <option>數位視覺 DIGITAL VISUAL</option>
+                                <option>動態設計 MOTION DESIGN</option>
+                                <option>其他合作 OTHER INQUIRIES</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-mono text-xs text-brand-muted uppercase mb-2 font-bold">MESSAGE // 專案簡述</label>
+                            <textarea rows="4" required class="w-full bg-brand-bg border-2 border-fine p-3 text-sm focus:outline-none focus:border-brand-blue transition-colors font-zh" placeholder="請簡述您的專案需求與預期時程..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-text text-white font-mono text-xs py-4 uppercase tracking-widest hover:bg-brand-blue transition-colors duration-300 font-bold">
+                            SEND MESSAGE // 發送訊息
+                        </button>
+                    </form>
+
+                    <!-- Form Success Message Banner -->
+                    <div id="form-success" class="hidden absolute inset-0 bg-brand-text text-white p-8 flex flex-col justify-center items-center text-center">
+                        <div class="w-12 h-12 border-2 border-brand-blue rounded-full flex items-center justify-center text-brand-blue text-2xl mb-4 font-mono font-bold">✓</div>
+                        <h3 class="text-2xl font-zh font-bold mb-2">訊息已送出</h3>
+                        <p class="text-xs font-mono text-neutral-400 mb-6">THANK YOU FOR REACHING OUT. WE WILL RESPOND WITHIN 24 HOURS.</p>
+                        <button onclick="resetForm()" class="text-xs font-mono border-2 border-white px-4 py-2 hover:bg-brand-blue hover:border-brand-blue transition-colors font-bold">
+                            CLOSE // 關閉
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 07 // FOOTER SECTION -->
+    <footer class="border-t border-fine bg-brand-bg z-10 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center border-b border-fine pb-8">
+                <!-- Brand Info -->
+                <div class="md:col-span-6">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <div class="w-3.5 h-3.5 bg-brand-blue"></div>
+                        <span class="font-display font-bold text-lg tracking-tight">維度之外 BEYOND DIMENSION</span>
+                    </div>
+                    <p class="text-xs font-mono text-brand-muted uppercase">
+                        EXPLORING VISUAL POSSIBILITIES BEYOND FORMS AND STRUCTURES.
+                    </p>
+                </div>
+
+                <!-- Footer Quick Nav -->
+                <div class="md:col-span-6 flex flex-wrap gap-6 md:justify-end text-xs font-mono text-brand-muted">
+                    <a href="#hero" class="hover:text-brand-blue transition-colors">TOP // 頁首</a>
+                    <a href="#about" class="hover:text-brand-blue transition-colors">PHILOSOPHY</a>
+                    <a href="#services" class="hover:text-brand-blue transition-colors">SERVICES</a>
+                    <a href="#works" class="hover:text-brand-blue transition-colors">WORKS</a>
+                    <a href="#cases" class="hover:text-brand-blue transition-colors">CASES</a>
+                </div>
+            </div>
+
+            <!-- Copyright and Index -->
+            <div class="flex flex-col sm:flex-row justify-between items-center pt-8 text-[11px] font-mono text-brand-muted space-y-4 sm:space-y-0">
+                <div>
+                    © 2026 維度之外 BEYOND DIMENSION STUDIO. ALL RIGHTS RESERVED.
+                </div>
+                <div>
+                    TAIPEI DESIGN PRACTICE // VISUAL SYSTEMS
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WORK DETAIL MODAL POPUP -->
+    <div id="work-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 lg:p-12 modal-backdrop bg-black/70">
+        <div class="bg-brand-bg border-2 border-brand-blue w-full max-w-4xl max-h-[90vh] overflow-y-auto relative p-6 sm:p-10 shadow-2xl">
+            <!-- Close Modal Button -->
+            <button onclick="closeWorkModal()" class="absolute top-6 right-6 font-mono text-xs border-2 border-fine px-3 py-1 hover:bg-brand-blue hover:border-brand-blue hover:text-white transition-colors z-10 font-bold">
+                ESC // 關閉 [X]
+            </button>
+
+            <!-- Modal Content Inject Target -->
+            <div id="modal-content" class="space-y-6 pt-4">
+                <!-- Dynamic Content Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC & GSAP ANIMATIONS -->
+    <script>
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Portfolio Data Array
+        const worksData = [
+            {
+                title: "形構 FORM & STRUCTURE",
+                category: "BRANDING // 品牌識別",
+                year: "2025",
+                client: "維度建築事務所 Architectural Firm",
+                image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+                concept: "以極簡幾何構成與材料質感為核心，打造理性且富含空間哲學的品牌視覺語言。我們重新定義了建築事務所與客戶對話的視覺媒介，從名片印藝到大型專案標籤均維持高度秩序感。"
+            },
+            {
+                title: "未定義的邊界 UNDEFINED BOUNDARY",
+                category: "POSTER // 當代藝術展海報",
+                year: "2025",
+                client: "台北當代藝術空間 MOCA Gallery",
+                image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&q=80",
+                concept: "運用不對稱排版與層次交疊，探討當代藝術展覽空間中的界線流動。海報採用瑞士網格結合局部發光幾何線條，在實體展場引發強烈視覺焦點。"
+            },
+            {
+                title: "視覺座標 VISUAL COORDINATES",
+                category: "PACKAGING // 獨立咖啡品牌",
+                year: "2024",
+                client: "Nadir Coffee Roasters",
+                image: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=1200&q=80",
+                concept: "以經緯座標與網格系統標註產地資訊，將理性的數據轉化為溫潤的包裝體驗。材質上選用未經漂白的再生卡紙與湛藍箔印，達成當代永續設計與高端視覺的平衡。"
+            },
+            {
+                title: "另一種秩序 ANOTHER ORDER",
+                category: "EDITORIAL // 設計哲學專刊",
+                year: "2024",
+                client: "Dimension Press 印刷社",
+                image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80",
+                concept: "瑞士風格幾何排版，精準調整字距與行距，呈現高質感閱讀體驗。專刊匯集 12 位當代建築師與視覺創作者對「空間與形式」的深度訪談。"
+            },
+            {
+                title: "空間切片 SPATIAL SLICES",
+                category: "DIGITAL UI // 藝廊線上展覽平台",
+                year: "2026",
+                client: "Slice Contemporary Art",
+                image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
+                concept: "打破傳統合格式網頁，以空間幾何切片方式呈現當代藝術作品。使用者能在跨平面的數位維度中流暢探索作品細節與展覽敘事。"
+            },
+            {
+                title: "結構之外 BEYOND STRUCTURE",
+                category: "MOTION DESIGN // 數位藝術節動態識別",
+                year: "2026",
+                client: "Taiwan Digital Art Festival",
+                image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+                concept: "將維度轉換過程轉化為動態圖形，結合聲光轉場，建立沈浸式的藝術節品牌識別。包括動態 Main Banner、現場大螢幕視覺與社群宣傳影片。"
+            }
+        ];
+
+        // Case Studies Interactive Slider State Data
+        const caseSlides = {
+            1: [
+                { img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80", cap: "— 品牌標誌幾何規範" },
+                { img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80", cap: "— 辦公室識別指標應用" },
+                { img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80", cap: "— 企業出版品與編輯設計" }
+            ],
+            2: [
+                { img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80", cap: "— 線上展覽首頁三維佈局" },
+                { img: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80", cap: "— 藝術作品互動細節檢視" },
+                { img: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=80", cap: "— 行動裝置響應式體驗" }
+            ]
+        };
+
+        let currentCaseSlide = { 1: 0, 2: 0 };
+
+        // INITIALIZATION ON DOM LOADED
+        window.addEventListener('DOMContentLoaded', () => {
+            initIntroAnimation();
+            initMobileMenu();
+            initTypographyDeconstruct();
+            initGSAPAnimations();
+        });
+
+        // 1. Full Intro Sequence (GSAP Timeline)
+        function initIntroAnimation() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.getElementById('intro-loader').style.display = 'none';
+                return;
+            }
+
+            const loader = document.getElementById('intro-loader');
+            const counter = document.getElementById('intro-counter');
+            let progress = { value: 0 };
+
+            const introTl = gsap.timeline();
+
+            // Numerical Counter Speed
+            introTl.to(progress, {
+                value: 100,
+                duration: 1.5,
+                ease: "power2.inOut",
+                onUpdate: () => {
+                    counter.innerText = `${Math.floor(progress.value)}%`;
+                }
+            })
+            .to("#intro-tag", { opacity: 1, duration: 0.4 }, "-=1.0")
+            .to("#intro-title span", { y: "0%", duration: 0.8, ease: "power3.out" }, "-=0.8")
+            .to("#intro-sub", { opacity: 1, duration: 0.5 }, "-=0.4")
+            // Shutter Exit Transition
+            .to("#intro-shutter-1", { y: "0%", duration: 0.5, ease: "power3.in" }, "+=0.2")
+            .to("#intro-shutter-2", { y: "0%", duration: 0.5, ease: "power3.in" }, "-=0.2")
+            .to(loader, { opacity: 0, duration: 0.3, onComplete: () => {
+                loader.style.display = 'none';
+                triggerHeroEntrance();
+            }});
+        }
+
+        function triggerHeroEntrance() {
+            gsap.from("#hero-title", {
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+            gsap.from("#hero-subtitle", {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                delay: 0.2
+            });
+            gsap.from("#hero-cta", {
+                y: 20,
+                opacity: 0,
+                duration: 0.6,
+                ease: "power3.out",
+                delay: 0.4
+            });
+        }
+
+        // 2. Cursor Interactive Typography Deconstruction Mechanics
+        function initTypographyDeconstruct() {
+            const container = document.getElementById('deconstruct-target');
+            if (!container) return;
+
+            const h2 = container.querySelector('h2');
+            const text = h2.innerText.trim();
+            h2.innerHTML = '';
+
+            // Break header into individual span wrap instances
+            const chars = [];
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const span = document.createElement('span');
+                span.className = 'deconstruct-char';
+                span.innerText = char === ' ' ? '\u00A0' : char;
+                h2.appendChild(span);
+                chars.push(span);
+            }
+
+            // Mouse position physics influence
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                chars.forEach((char) => {
+                    const cRect = char.getBoundingClientRect();
+                    const cX = cRect.left + cRect.width / 2;
+                    const cY = cRect.top + cRect.height / 2;
+
+                    const distX = mouseX - cX;
+                    const distY = mouseY - cY;
+                    const distance = Math.sqrt(distX * distX + distY * distY);
+                    const maxDist = 180;
+
+                    if (distance < maxDist) {
+                        const power = (1 - distance / maxDist);
+                        const moveX = (distX / distance) * -35 * power;
+                        const moveY = (distY / distance) * -35 * power;
+                        const rotate = (distX / distance) * 20 * power;
+
+                        gsap.to(char, {
+                            x: moveX,
+                            y: moveY,
+                            rotate: rotate,
+                            color: power > 0.4 ? '#2457D6' : '#151515',
+                            duration: 0.2,
+                            ease: "power2.out"
+                        });
+                    } else {
+                        gsap.to(char, {
+                            x: 0,
+                            y: 0,
+                            rotate: 0,
+                            color: '#151515',
+                            duration: 0.5,
+                            ease: "elastic.out(1, 0.4)"
+                        });
+                    }
+                });
+            });
+
+            container.addEventListener('mouseleave', () => {
+                chars.forEach((char) => {
+                    gsap.to(char, {
+                        x: 0,
+                        y: 0,
+                        rotate: 0,
+                        color: '#151515',
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.3)"
+                    });
+                });
+            });
+        }
+
+        // 3. Mobile Navigation Menu Toggle Logic
+        function initMobileMenu() {
+            const toggleBtn = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            toggleBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        // 4. GSAP ScrollTriggers & Interactive Effects
+        function initGSAPAnimations() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            // Hero Parallax Elements
+            gsap.to("#hero-geo-1", {
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1
+                },
+                y: -120,
+                rotate: 45
+            });
+
+            gsap.to("#hero-geo-2", {
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: 1.5
+                },
+                y: -60,
+                rotate: -30
+            });
+
+            // Philosophy / About Stagger Animations
+            gsap.from(".about-p", {
+                scrollTrigger: {
+                    trigger: "#about",
+                    start: "top 75%",
+                },
+                x: -40,
+                opacity: 0,
+                duration: 0.9,
+                ease: "power3.out"
+            });
+
+            gsap.from(".about-card", {
+                scrollTrigger: {
+                    trigger: ".about-card",
+                    start: "top 85%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            // Services Grid Rows Stagger Entrance (Safely set clear opacity)
+            gsap.from(".service-row", {
+                scrollTrigger: {
+                    trigger: "#services",
+                    start: "top 85%",
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                stagger: 0.12,
+                ease: "power2.out",
+                clearProps: "all"
+            });
+
+            // Portfolio Works Cards Reveal Sequence
+            gsap.from(".work-card", {
+                scrollTrigger: {
+                    trigger: "#works",
+                    start: "top 70%",
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.9,
+                stagger: 0.18,
+                ease: "power3.out"
+            });
+        }
+
+        // 5. Case Study Interactive Image Slider Logic
+        function updateCaseSlide(caseNum) {
+            const index = currentCaseSlide[caseNum];
+            const data = caseSlides[caseNum][index];
+
+            document.getElementById(`case${caseNum}-slide-num`).innerText = `0${index + 1}`;
+            document.getElementById(`case${caseNum}-slide-cap`).innerText = data.cap;
+
+            const slides = document.querySelectorAll(`.case${caseNum}-slide`);
+            slides.forEach((slide, idx) => {
+                if (idx === index) {
+                    gsap.to(slide, { opacity: 1, duration: 0.6, ease: "power2.inOut" });
+                    slide.classList.remove('pointer-events-none');
+                } else {
+                    gsap.to(slide, { opacity: 0, duration: 0.6, ease: "power2.inOut" });
+                    slide.classList.add('pointer-events-none');
+                }
+            });
+        }
+
+        function nextCaseSlide(caseNum) {
+            currentCaseSlide[caseNum] = (currentCaseSlide[caseNum] + 1) % caseSlides[caseNum].length;
+            updateCaseSlide(caseNum);
+        }
+
+        function prevCaseSlide(caseNum) {
+            currentCaseSlide[caseNum] = (currentCaseSlide[caseNum] - 1 + caseSlides[caseNum].length) % caseSlides[caseNum].length;
+            updateCaseSlide(caseNum);
+        }
+
+        // Keyboard arrow listener for sliders
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextCaseSlide(1);
+            if (e.key === 'ArrowLeft') prevCaseSlide(1);
+        });
+
+        // 6. Modal Portfolio Work View Injection
+        function openWorkModal(index) {
+            const work = worksData[index];
+            const modal = document.getElementById('work-modal');
+            const content = document.getElementById('modal-content');
+
+            content.innerHTML = `
+                <div class="border-b border-fine pb-4">
+                    <span class="text-xs font-mono text-brand-blue uppercase tracking-widest font-bold">${work.category} // ${work.year}</span>
+                    <h3 class="text-3xl font-zh font-bold mt-1 text-brand-text">${work.title}</h3>
+                    <p class="text-xs font-mono text-brand-muted mt-1">CLIENT // ${work.client}</p>
+                </div>
+                <div class="aspect-[16/9] overflow-hidden bg-brand-surface border-2 border-fine">
+                    <img src="${work.image}" alt="${work.title}" class="w-full h-full object-cover">
+                </div>
+                <div class="space-y-4 text-sm font-zh leading-relaxed text-brand-text/90">
+                    <h4 class="font-mono text-xs font-bold text-brand-blue uppercase">// DESIGN CONCEPT & ARCHITECTURE</h4>
+                    <p>${work.concept}</p>
+                </div>
+                <div class="pt-4 border-t border-fine flex justify-between items-center text-xs font-mono">
+                    <span class="text-brand-muted">BEYOND DIMENSION STUDIO INDEX NO. 0${index + 1}</span>
+                    <button onclick="closeWorkModal()" class="px-5 py-2.5 bg-brand-blue text-white uppercase hover:bg-brand-blueDark transition-colors font-bold">
+                        CLOSE PROJECT // 關閉
+                    </button>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWorkModal() {
+            const modal = document.getElementById('work-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeWorkModal();
+        });
+
+        // 7. Interactive Form Submission Logic
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const successBanner = document.getElementById('form-success');
+            successBanner.classList.remove('hidden');
+            gsap.from(successBanner, { opacity: 0, y: 15, duration: 0.4 });
+        }
+
+        function resetForm() {
+            const successBanner = document.getElementById('form-success');
+            document.getElementById('contact-form').reset();
+            successBanner.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
